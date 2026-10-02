@@ -1,5 +1,6 @@
 import torch
 from torchvision import models, transforms
+import gradio as gr
 from PIL import Image
 
 weights = models.ResNet50_Weights.DEFAULT
@@ -32,5 +33,12 @@ def predict(img):
 
     return results
 
-img = Image.open('image.jpg').convert("RGB")
-print(predict(img))
+demo = gr.Interface(
+    fn=predict,
+    inputs=gr.Image(type="pil", label="Upload an Image"),
+    outputs=gr.Label(num_top_classes=5, label="Top 5 Predictions"),
+    title="ResNet-50 Image Classifier"
+)
+
+if __name__ == "__main__":
+    demo.launch()
