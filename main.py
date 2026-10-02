@@ -26,7 +26,7 @@ def predict(img):
     with torch.no_grad():
         predictions = model(batch)
 
-    probabilities = torch.nn.functional.softmax(predictions, dim=1)[0] * 100
+    probabilities = torch.nn.functional.softmax(predictions, dim=1)[0]
 
     top5_score, top5_index = torch.topk(probabilities, 5)
     results = {categories[top5_index[i].item()]: float(top5_score[i].item()) for i in range(5)}
